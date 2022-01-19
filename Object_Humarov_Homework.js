@@ -28,20 +28,7 @@ WorkerNumber1864.Salary = 15000
 WorkerNumber1864.WorkingHours = 40
 
 
-const WorkerNumber1865 = new Worker(/!*'Виталий','Зенцов','Мастер сборочного участка',13000,50*!/)
-WorkerNumber1865.Name = 'Виталий'
-WorkerNumber1865.Surname = 'Зенцов'
-WorkerNumber1865.Position = 'Мастер сборочного участка'
-WorkerNumber1865.Salary = 13000
-WorkerNumber1865.WorkingHours = 50
 
-
-const WorkerNumber1866 = new Worker(/!*'Юрий','Краснов','Главный-механик',17000,72*!/)
-WorkerNumber1866.Name = 'Юрий'
-WorkerNumber1866.Surname = 'Краснов'
-WorkerNumber1866.Position = 'Главный-механик'
-WorkerNumber1866.Salary = 17000
-WorkerNumber1866.WorkingHours = 72
 
 */
 
@@ -51,24 +38,71 @@ WorkerNumber1866.WorkingHours = 72
 
 
 class Workers {
-    constructor(Name,Surname,Position,Salary,WorkingHours) {
+    #Account
+    constructor(Name ='',Surname = '',Position = '',Salary =0,WorkingHours = 0,Account = '') {
+
         this.Name = Name;
         this.Surname = Surname;
         this.Position = Position;
         this.Salary = Salary;
         this.WorkingHours = WorkingHours;
+        this.#Account = Account;
+        // добавил типа учентую запись ИТР работников предприятия
+        // Аккаунт учетной записи имеет шаблон имя латиницей+точка+фамилия латиницей
+        // +дефиз+инициалы предприятия(DAZ Днепровский агрегатный завод)
+
+        // метод
+        this.setAccount = function (Account){
+            if (/^[a-zA-Z]{2,15}.[a-zA-Z]{2,15}-DAZ$/.test(Account))
+            {this.#Account = Account}
+            else {throw new Error('Неверные данные входа')}
+
+        }
+        this.getAccount = function (){
+            return this.#Account
+        }
+
     }
 }
 
+/*
 const person1234 = new Workers('Алексей','Алексеев','Оператор-ЧПУ',15000,72)
 const person1235 = new Workers('Владимир','Табуреткин','Слесарь',14000,64);
 
+*/
+
+const person1234 = new Workers()
+Object.freeze(person1234)
+
+
+try{
+    person1234.setAccount('humarov.alexandr-daz')
+    console.log(person1234)
+} catch (er){
+    console.log('Попытка входа 1 '+er.message)
+}
+
+
+try{
+    person1234.setAccount('humarov alexandr-daz')
+    console.log(person1234)
+} catch (er){
+    console.log('Попытка входа 2 '+er.message)
+}
+
+
+try{
+    person1234.setAccount('humarov.alexandr-DAZ')
+    console.log(person1234)
+} catch (er){
+    console.log('Попытка входа 3 '+er.message)
+}
 
 
 
-
-
+/*
 console.log(person1234)
 console.log(person1235)
+*/
 
 
